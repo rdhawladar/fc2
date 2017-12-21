@@ -1,0 +1,118 @@
+@extends('layouts.user_backend')
+ 
+
+@section('content')
+      <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Event Calendar
+        <small>Preview</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Forms</a></li>
+        <li class="active">Advanced Elements</li>
+      </ol>
+    </section>
+
+	
+	
+	
+    <!-- Main content -->
+    <section class="content">
+		<div class="row">
+		 <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-body no-padding">
+				<br/>
+				
+				
+				
+			  	<table align="center" border="0" cellpadding="5" cellspacing="5" style="width:100%;">
+				<tr>
+					<td align="center">Today : {{ $today }}</td>
+				</tr>
+				</table>
+				
+				
+				<table align="center" border="0" cellpadding="1" cellspacing="1" style="width:100%;border:1px solid #CCCCCC">
+				<thead>
+					<tr bgcolor="#EFEFEF">
+						<td align="center">Mon</td>
+						<td align="center">Sun</td>
+						<td align="center">Tue</td>
+						<td align="center">Wed</td>
+						<td align="center">Thu</td>
+						<td align="center">Fri</td>
+						<td align="center">Sat</td>
+					</tr>
+				</thead>			
+				
+				
+				@for( $ds = 1 ; $ds <= $s ; $ds++ ) 
+				<td style="font-family:arial;color:#B3D9FF;height:200px;border:1px solid #ccc;" align="center" valign="middle" bgcolor="#FFFFFF">&nbsp;&nbsp;</td>
+				@endfor
+				
+				@for( $d = 1; $d <= $endDate ; $d++) 	
+				
+					@if (date("w",mktime (0,0,0,$month,$d,$year)) == 0) 
+					<tr>
+					@endif					
+					
+					@php $fontColor="#000000" @endphp		
+					
+					@if ( date("D" , mktime (0,0,0,$month,$d,$year) ) == "Sun") 	 
+						@php 
+							$fontColor="red" 
+						@endphp
+					@endif 
+				    
+                    @if($d == $day)					
+						 
+					<td style="font-family:arial;font-size:13px;color:#333333;width:14%;height:200px;background-color:#eea236;border:1px solid #ccc;" align=center valign=middle>
+						<span style="color:{{ $fontColor }};text-decoration:underline;">
+							<a href="{{ url('/sys/user/calendar-event-detail/'. $year.'-'.$month.'-'. $d   ) }}">
+								{{ $d }}
+							</a>							
+						</span>
+						<table width="100%">
+						<tr>
+							<td align="center" style="background-color:#666;color:#fff;">Test Event</td>
+						</tr>
+						</table>
+					</td>
+					@else
+						
+					<td style="font-family:arial;font-size:13px;color:#333333;width:14%;height:200px;text-decoration:underline;border:1px solid #ccc;" align=center valign=middle>
+						<span style="color:{{ $fontColor }}">
+							<a href="{{ url('/sys/user/calendar-event-detail/'. $year.'-'.$month.'-'. $d ) }}">
+							{{ $d }}
+							</a>
+						</span>
+					</td>					
+					@endif 
+					
+					@if ( date("w" , mktime (0,0,0,$month,$d,$year)) == 6 ) 		 
+					</tr> 
+					@endif
+					
+				@endfor
+				</table> 
+			  
+			  
+				
+			  
+			  
+			   
+			<br/>
+             
+          </div>
+           
+        </div>
+		</div>
+	 
+ 
+    </section>
+@endsection	
